@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Score Panel</title>
+        <link rel="shortcut icon" href=""/>
+
+        <script>
+            var score1, score2;
+            function addPoints(p, n) {
+                if (n === 1) {
+                    document.getElementById("score1").value = (parseInt(document.getElementById("score1").value) + p);
+                } else if (n === 2) {
+                    document.getElementById("score2").value = (parseInt(document.getElementById("score2").value) + p);
+                }
+            }
+            function reset(n) {
+                if (n === 1) {
+                    document.getElementById("score1").value = score1;
+                } else if (n === 2) {
+                    document.getElementById("score2").value = score2;
+                }
+            }
+            function currentStatus() {
+                score1 = document.getElementById("score1").value;
+                score2 = document.getElementById("score2").value;
+            }
+        </script>
+
+    </h:head>
+    <h:body onload="currentStatus()">
+
+        <div style="float: left; margin-top: 15px; margin-left: 20%;">
+            <f:view>
+                <h:form prependId="false">
+                    <h1><h:outputText value="Team 1 Score Panel"/></h1>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Team1:" for="team1" />
+                        <h:inputText readonly="true" id="team1" value="#{controller.schoolMatch.team1}" title="Team1" />
+                        <h:outputLabel value="Score1:" for="score1" />
+                        <h:inputText id="score1" value="#{controller.schoolMatch.score1}" title="Score1" />
+                        <h:commandButton id="save1" action="#{controller.editMatch()}" value="Save">
+                            <f:ajax execute="@form"/>
+                        </h:commandButton>
+                    </h:panelGrid>
+                </h:form>
+            </f:view>
+            <br/>
+            <input id="left5points1" type="button" value="5 Points" onclick="addPoints(5, 1);" />
+            <input id="left10points1" type="button" value="10 Points" onclick="addPoints(10, 1);" />
+            <input id="left15points1" type="button" value="15 Points" onclick="addPoints(15, 1);" />
+            <input id="reset1" type="button" value="Reset" onclick="reset(1);" />
+        </div>
+
+        <div style="float: right; margin-top: 10px; margin-right: 20%;">
+            <f:view>
+                <h:form prependId="false">
+                    <h1><h:outputText value="Team 2 Score Panel"/></h1>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Team2:" for="team2" />
+                        <h:inputText readonly="true" id="team2" value="#{controller.schoolMatch.team2}" title="Team2" />
+                        <h:outputLabel value="Score2:" for="score2" />
+                        <h:inputText id="score2" value="#{controller.schoolMatch.score2}" title="Score2" />
+                        <h:commandButton id="save2" action="#{controller.editMatch()}" value="Save">
+                            <f:ajax execute="@form"/>
+                        </h:commandButton>
+                    </h:panelGrid>
+                </h:form>
+            </f:view>
+            <br/>
+            <input id="left5points2" type="button" value="5 Points" onclick="addPoints(5, 2);" />
+            <input id="left10points2" type="button" value="10 Points" onclick="addPoints(10, 2);" />
+            <input id="left15points2" type="button" value="15 Points" onclick="addPoints(15, 2);" />
+            <input id="reset2" type="button" value="Reset" onclick="reset(2);" />
+        </div>
+        <br/>
+        
+        <div style="margin-top: 20%; margin-right: 50%;margin-left: 50%;">
+            <f:view>
+                <h:form prependId="false">
+                    <h:commandButton style="border-radius: 2px; padding: 4px; font-weight: bold; 
+                                     font-family: sans-serif; font-size: large;  width: 100px; height: 60px" 
+                                     id="end" onclick="return confirm('Are you sure to end the match?');" 
+                                     action="#{controller.closeMatch()}" value="End Match">
+                    </h:commandButton>
+                </h:form>
+            </f:view>
+        </div>
+
+    </h:body>
+
+</html>
+
